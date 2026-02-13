@@ -1,0 +1,17 @@
+{
+	"name": "AzureSqlDatabase1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "azureprojectserver01.database.windows.net",
+			"database": "swapnildb",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "swap",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEU5QjMwMTk1LTg2REEtNDU2OC1CMUIxLTQwMzNBMTFBOUJDOF9kMDM3ZjY0OC1jM2RmLTRjNTktYWI0MS0wYTJmYjI4OTgzNmMiDQp9"
+		}
+	}
+}
