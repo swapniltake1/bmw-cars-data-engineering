@@ -1,0 +1,9 @@
+{
+	"name": "adf-cars-swap-project",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bfad8a25-63ad-4f7e-90d1-85109f4e68db",
+		"tenantId": "9f7c7551-cd79-46f6-94de-7c383ad2887d"
+	}
+}
