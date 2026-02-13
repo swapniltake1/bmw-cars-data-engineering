@@ -71,12 +71,16 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from watermark_carsales",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "sd_sqlDB",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "watermark_carsales"
+						}
 					}
 				}
 			},
@@ -91,7 +95,21 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "sd_sqlDB",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "CarSales"
+						}
+					}
+				}
 			}
 		],
 		"annotations": []
