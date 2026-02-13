@@ -1,0 +1,65 @@
+{
+	"name": "Copy data from git",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy Data from git to db",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_git",
+						"type": "DatasetReference",
+						"parameters": {
+							"load_flag": "IncrementalSales.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sd_sqlDB",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "CarSales"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
