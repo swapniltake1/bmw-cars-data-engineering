@@ -1,5 +1,5 @@
 {
-	"name": "Copy data from git",
+	"name": "source_preparation",
 	"properties": {
 		"activities": [
 			{
