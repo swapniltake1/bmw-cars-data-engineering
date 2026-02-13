@@ -16,7 +16,7 @@
 			"location": {
 				"type": "HttpServerLocation",
 				"relativeUrl": {
-					"value": "/swapniltake1/bmw-cars-data-engineering/refs/heads/main/data/\r\n@{dataset().load_flag}",
+					"value": "/swapniltake1/bmw-cars-data-engineering/refs/heads/main/data/@{dataset().load_flag}",
 					"type": "Expression"
 				}
 			},

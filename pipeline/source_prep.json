@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Data",
+				"name": "Copy Data from git",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -25,11 +25,33 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "ds_git",
+						"type": "DatasetReference",
+						"parameters": {
+							"load_flag": "SalesData.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sd_sqlDB",
 						"type": "DatasetReference"
 					}
 				]
