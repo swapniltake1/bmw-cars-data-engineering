@@ -3,9 +3,22 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Data from git",
+				"name": "Copy Incremental Data",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "last_load",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "current_load",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -16,19 +29,22 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "HttpReadSettings",
-							"requestMethod": "GET"
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT * FROM CarSales WHERE DATE_ID > @{activity('last_load').output} AND DATE_ID <= @{activity('current_load').output}",
+							"type": "Expression"
 						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
 					},
 					"enableStaging": false,
 					"translator": {
@@ -42,16 +58,16 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_git",
+						"referenceName": "sd_sqlDB",
 						"type": "DatasetReference",
 						"parameters": {
-							"load_flag": "SalesData.csv"
+							"table_name": "CarSales"
 						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sd_sqlDB",
+						"referenceName": "ds_bronze",
 						"type": "DatasetReference"
 					}
 				]
@@ -81,7 +97,8 @@
 						"parameters": {
 							"table_name": "watermark_carsales"
 						}
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
@@ -99,6 +116,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select max(Date_ID) as max_date from dbo.CarSales",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -108,7 +126,8 @@
 						"parameters": {
 							"table_name": "CarSales"
 						}
-					}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],
