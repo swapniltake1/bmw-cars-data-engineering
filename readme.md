@@ -94,3 +94,5 @@ Also validate:
 
 - The repository stores ADF metadata as JSON and Databricks notebooks as `.ipynb`.
 - Do not commit real credentials/tokens. Replace with Key Vault-backed secrets in production.
+
+- Thanks for visiting :)
